@@ -48,6 +48,6 @@ CONTEXT=""
 $HELM_BIN status $@
 echo;echo
 
-echo "$HELM_BIN get manifest $RELEASE --namespace $HELM_NAMESPAC | kubectl get $CONTEXT --namespace $HELM_NAMESPAC -f -"
-$HELM_BIN get manifest $RELEASE --namespace $HELM_NAMESPAC| \
-        kubectl get $CONTEXT --namespace $HELM_NAMESPAC -f -
+echo "$HELM_BIN get manifest $RELEASE --namespace $HELM_NAMESPACE | kubectl get $CONTEXT --namespace $HELM_NAMESPACE -f -"
+$HELM_BIN get manifest $RELEASE --namespace $HELM_NAMESPACE | \
+        kubectl get $CONTEXT --namespace $HELM_NAMESPACE -f -
