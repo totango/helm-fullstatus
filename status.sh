@@ -37,14 +37,21 @@ for i in $@; do
         help
     elif [[ "${i}" == "-n" ]]; then
         nextIsNameSpace="true"
+        echo "in -n ${i}" 
     elif [[ "${i}" != -* ]]; then
         RELEASE=$i
+        echo "in reles ${i}"
     elif [[ "$nextIsNameSpace" == "true" ]]; then
         NAMESPACE=$i
         nextIsNameSpace="false"
+        echo "in namespace ${i}"
 
     fi
 done
+
+echo $HELM_NAMESPACE
+echo $HELM_KUBECONTEXT
+echo $RELEASE
 
 [ -z "${RELEASE}" ] && usage
 
@@ -53,5 +60,7 @@ CONTEXT=""
 
 $HELM_BIN status $@
 echo;echo
+
+echo "$HELM_BIN get manifest $RELEASE | kubectl get $CONTEXT --namespace $NAMESPACE -f -"
 $HELM_BIN get manifest $RELEASE | \
         kubectl get $CONTEXT --namespace $NAMESPACE -f -
