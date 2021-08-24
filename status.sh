@@ -31,21 +31,28 @@ help() {
     exit 0
 }
 
-release=""
+RELEASE=""
+NAMESPACE=""
 for i in $@; do
     if [ "$i" = "-h" ] || [ "$i" = "--help" ]; then
         help
+    elif [[ "${i}" == "-n" ]]; then
+        nextIsNameSpace="true"
     elif [[ "${i}" != -* ]]; then
-        release=$i
+        RELEASE=$i
+    elif [[ "$nextIsNameSpace" == "true" ]]; then
+        NAMESPACE=$i
+        nextIsNameSpace="false"
+
     fi
 done
 
-[ -z "${release}" ] && usage
+[ -z "${RELEASE}" ] && usage
 
-context=""
-[ -n "${HELM_KUBECONTEXT}" ] && context="--context $HELM_KUBECONTEXT"
+CONTEXT=""
+[ -n "${HELM_KUBECONTEXT}" ] && CONTEXT="--context $HELM_KUBECONTEXT"
 
 $HELM_BIN status $@
 echo;echo
-$HELM_BIN get manifest $release | \
-        kubectl get $context -f -
+$HELM_BIN get manifest $RELEASE | \
+        kubectl get $CONTEXT -n $NAMESPACE -f -
