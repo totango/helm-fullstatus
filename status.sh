@@ -33,7 +33,7 @@ help() {
 
 RELEASE=""
 for i in $@; do
-    echo "$i"
+    echo "loop $i"
     if [ "$i" = "-h" ] || [ "$i" = "--help" ]; then
         help
     elif [[ "${i}" == "-n" ]]; then
@@ -51,7 +51,7 @@ done
 
 echo $HELM_NAMESPACE
 echo $HELM_KUBECONTEXT
-echo $RELEASE
+echo "RELEASE: $RELEASE"
 
 [ -z "${RELEASE}" ] && usage
 
