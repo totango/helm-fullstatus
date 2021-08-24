@@ -33,25 +33,12 @@ help() {
 
 RELEASE=""
 for i in $@; do
-    echo "loop $i"
     if [ "$i" = "-h" ] || [ "$i" = "--help" ]; then
         help
-    elif [[ "${i}" == "-n" ]]; then
-        nextIsNameSpace="true"
-        echo "in -n ${i}" 
-    elif [[ "${i}" != -* && "$nextIsNameSpace" != "true" ]]; then
+    elif [[ "${i}" != -* ]]; then
         RELEASE=$i
-        echo "in reles ${i}"
-    elif [[ "$nextIsNameSpace" == "true" ]]; then
-        NAMESPACE=$i
-        nextIsNameSpace="false"
-        echo "in namespace ${i}"
     fi
 done
-
-echo "hrlm_ns $HELM_NAMESPACE"
-echo "conte $HELM_KUBECONTEXT"
-echo "RELEASE: $RELEASE"
 
 [ -z "${RELEASE}" ] && usage
 
@@ -61,6 +48,6 @@ CONTEXT=""
 $HELM_BIN status $@
 echo;echo
 
-echo "$HELM_BIN get manifest $RELEASE | kubectl get $CONTEXT --namespace $HELM_NAMESPAC -f -"
-$HELM_BIN get manifest $RELEASE | \
+echo "$HELM_BIN get manifest $RELEASE --namespace $HELM_NAMESPAC | kubectl get $CONTEXT --namespace $HELM_NAMESPAC -f -"
+$HELM_BIN get manifest $RELEASE --namespace $HELM_NAMESPAC| \
         kubectl get $CONTEXT --namespace $HELM_NAMESPAC -f -
