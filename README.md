@@ -11,7 +11,7 @@ This plugin requires `kubectl` to be installed and available on your $PATH.
 To install the plugin:
 
 ```
-helm plugin install https://github.com/marckhouzam/helm-fullstatus
+helm plugin install https://github.com/totango/helm-fullstatus
 ```
 
 ## Usage
