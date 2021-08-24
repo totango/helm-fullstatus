@@ -32,7 +32,6 @@ help() {
 }
 
 RELEASE=""
-NAMESPACE=""
 for i in $@; do
     if [ "$i" = "-h" ] || [ "$i" = "--help" ]; then
         help
@@ -55,4 +54,4 @@ CONTEXT=""
 $HELM_BIN status $@
 echo;echo
 $HELM_BIN get manifest $RELEASE | \
-        kubectl get $CONTEXT -n $NAMESPACE -f -
+        kubectl get $CONTEXT --namespace $NAMESPACE -f -
