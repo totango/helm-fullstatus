@@ -49,8 +49,8 @@ for i in $@; do
     fi
 done
 
-echo $HELM_NAMESPACE
-echo $HELM_KUBECONTEXT
+echo "hrlm_ns $HELM_NAMESPACE"
+echo "conte $HELM_KUBECONTEXT"
 echo "RELEASE: $RELEASE"
 
 [ -z "${RELEASE}" ] && usage
