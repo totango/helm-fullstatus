@@ -33,19 +33,19 @@ help() {
 
 RELEASE=""
 for i in $@; do
+    echo "$i"
     if [ "$i" = "-h" ] || [ "$i" = "--help" ]; then
         help
     elif [[ "${i}" == "-n" ]]; then
         nextIsNameSpace="true"
         echo "in -n ${i}" 
-    elif [[ "${i}" != -* ]]; then
+    elif [[ "${i}" != -* && "$nextIsNameSpace" != "true" ]]; then
         RELEASE=$i
         echo "in reles ${i}"
     elif [[ "$nextIsNameSpace" == "true" ]]; then
         NAMESPACE=$i
         nextIsNameSpace="false"
         echo "in namespace ${i}"
-
     fi
 done
 
